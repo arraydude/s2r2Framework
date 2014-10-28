@@ -1,4 +1,4 @@
-#(SR)^2 Framework
+#(SR)2 Framework
 The engine from ToOLX
 
 Dev Documentation:
