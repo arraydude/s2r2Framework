@@ -1,0 +1,91 @@
+{% extends  '@Framework/Base.twig' %}
+{% set idBody = '' %}
+
+{% block head %}
+{% endblock %}
+
+{% block cssResources %}
+    {{ parent() }}
+    <style type="text/css">
+        #login-box-inner .login-logo{
+            text-align: center;
+            font-size: 3em;
+            padding-bottom: 30px;
+            color: #72A7AB;
+        }
+
+        #login-box-inner .login-logo .icon-isologo {
+            margin-right: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        {% block content %}
+        {% endblock %}
+        <div class="col-xs-12">
+            <div id="login-box" class="fade-in">
+                <div class="row">
+                    <div class="col-xs-12 clearfix" id="login-box-header">
+                        <div class="login-box-header-red"></div>
+                        <div class="login-box-header-green"></div>
+                        <div class="login-box-header-yellow"></div>
+                        <div class="login-box-header-purple"></div>
+                        <div class="login-box-header-blue"></div>
+                        <div class="login-box-header-gray"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="login-box-inner">
+                            <div id="login-logo" class="brand-font">
+                                <i class="icon-isologo"></i>toolx
+                            </div>
+
+                            {% if error %}
+                                <div class="alert alert-warning fade in">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                                    </button>
+                                    <i class="fa fa-warning fa-fw fa-lg"></i>
+                                    <strong>Warning!</strong> {{ error|trans }}
+                                </div>
+                            {% endif %}
+
+                            <form action="/system/login/login" method="post" name="login" role="form">
+                                {% if from %}
+                                    <input type="hidden" name="from" value="{{ from }}"/>
+                                {% endif %}
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input class="form-control" type="text" placeholder="Username" id="username"
+                                           name="username" value="" autocomplete="on" autofocus="">
+                                </div>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <input type="password" class="form-control" placeholder="Password" id="password"
+                                           name="password">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-success col-xs-12">Login</button>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button style="background-color: #cc3732;" type="button"
+                                                class="btn btn-danger col-xs-12"
+                                                onclick="window.location.href='{{ googleUrl }}'"><i
+                                                    class="fa fa-google-plus"></i> Sign In with Google
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block foot %}
+{% endblock %}

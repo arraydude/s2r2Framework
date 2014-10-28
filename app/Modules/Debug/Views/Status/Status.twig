@@ -1,0 +1,94 @@
+<div class="row">   
+    <div class="col-md-6">
+        <div id="login-box" style="max-width:600px;width:600px">
+            <div class="row">
+                <div>
+                    <table class="table" style="width:600px">
+                        <thead>
+                            <tr>
+                                <th class="text-right"><span>Key (db.yml)</span></th>
+                                <th class="text-center"><span>Name</span></th>
+                                <th class="text-center"><span>Host</span></th>
+                                <th class="text-center"><span>User</span></th>
+                                <th class="text-center"><span>Status</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, value in databases %}
+                                <tr>
+                                    <td class="text-right">{{ key }}</td>
+                                    <td class="text-center">{{ value.name }}</td>
+                                    <td class="text-center">{{ value.host }}</td>
+                                    <td class="text-center">{{ value.user }}</td>
+                                    <td class="text-center">
+                                        {% if value.success == true%}
+                                            <span class="label label-success">OK</span>
+                                        {%else%}
+                                            <span class="label label-danger">ERROR</span>
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div id="login-box" style="max-width:600px;width:600px">
+            <div class="row">
+                <div>
+                    <table class="table" style="width:600px">
+                        <thead>
+                            <tr>
+                                <th class="text-center"><span>Service</span></th>
+                                <th class="text-center"><span>Environment</span></th>
+                                <th class="text-center"><span>URL</span></th>
+                                <th class="text-center"><span>Status</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, value in services %}
+                                <tr>
+                                    <td class="text-center">{{ value.name }}</td>
+                                    <td class="text-center">{{ value.environment }}</td>
+                                    <td class="text-center">{{ value.url }}</td>
+                                    <td class="text-center">
+                                        {% if value.success == true%}
+                                            <span class="label label-success">OK</span>
+                                        {%else%}
+                                            <span class="label label-danger">ERROR</span>
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="login-box" style="max-width:600px;width:600px">
+                    <div class="row">
+                        <div>
+                            <table class="table" style="width:600px">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">ToOLX Pusher</td>
+                                        <td class="text-center">
+                                            {% if pusher.success == true%}
+                                                <span class="label label-success">OK</span>
+                                            {%else%}
+                                                <span class="label label-danger">ERROR</span>
+                                            {%endif%}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

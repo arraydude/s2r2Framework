@@ -1,0 +1,33 @@
+{% if 'changePassword' == element.action %}
+    {% set debugParams = '*****' %}
+{% else %}
+    {% set debugParams = element.params %}
+{% endif %}
+
+<tr data-activity-params={{ debugParams }}>
+    <td class="text-left">
+        {% if element.module == 'system' %}
+            <i class="fa fa-gears"></i>
+        {% else %}
+            <i class="fa fa-legal"></i>
+        {% endif %}
+    </td>
+    <td>{{ element.log_id }}</td>
+    <td class="truncate-ellipsis">
+        <img src="{{ getProfilePhoto(element.profile_photo, element.user_email, 45) }}" class="img-circle" />
+        <a href="/system/profile/?userId={{ element.user_id}}" class="user-link">{{ element.user_name}}</a>
+        <span class="user-subhead">{{ element.user_email }}</span>
+    </td>
+    <td>{{ element.module }}</td>
+    <td>{{ element.controller }}</td>
+    <td>{{ element.action }}</td>
+    <td>{{ element.created_date }}</td>
+    <td>
+        <a href="#" class="table-link" data-show-params data-toggle="tooltip" data-title="Show Params" title="Show Params">
+            <span class="fa-stack">
+                <i class="fa fa-square fa-stack-2x"></i>
+                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+            </span>
+        </a>
+    </td>
+</tr>

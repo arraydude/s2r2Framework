@@ -1,0 +1,38 @@
+{% extends "@Framework/Base.twig" %}
+
+{% set systemModuleActive = {'roles': true} %}
+
+{% block jsResources %}
+    <script src="{{ asset('js/roles.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="clearfix">
+    <h1 class="pull-left">{{"Roles"|trans}}</h1>
+
+    <div class="pull-right top-page-ui">
+        <a href="/system/roles/new" class="btn btn-primary pull-right">
+            <i class="fa fa-plus-circle fa-lg"></i> {{"Add Role"|trans}}
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="main-box clearfix">
+            <div class="table-responsive">
+                <table class="table user-list">
+                    <thead>
+                        <tr>
+                            <th><span>{{"Name"|trans}}</span></th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% include ('@SystemModule/Roles/Template/Row.twig') with {'roles': roles, 'level': 0} %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

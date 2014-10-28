@@ -1,0 +1,6 @@
+<a href="/debug" class="menu dropdown-toggle"> <i class="fa fa-rocket"></i> <span>Debug</span> <i class="fa fa-chevron-circle-down drop-icon"></i> </a> <ul class="submenu" {% if moduleActive %}style="display:block;"{% endif %}> 
+<li><a {% if phpInfoActive %}class="active"{% endif %} href="/debug/default/info">PHP Info</a></li>
+<li><a {% if fileExplorerActive %}class="active"{% endif %} href="/debug/default/default">File Explorer</a></li>
+<li><a {% if cacheActive %}class="active"{% endif %} href="/debug/cache/default">Cache Management</a></li>
+<li><a {% if cronActive %}class="active"{% endif %} href="/debug/cron/default">Cron Management</a></li>
+</ul>

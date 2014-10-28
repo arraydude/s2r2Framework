@@ -1,0 +1,34 @@
+{% extends  '@Framework/Base.twig' %}
+{% set idBody = 'error-page' %}
+
+{% block head %}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    {% block content %}
+    {% endblock %}
+    <div class="col-xs-12">
+        <div id="error-box">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="error-box-inner">
+                        <img src="{{ asset('img/error-404-v3.png', 'system') }}" alt="Have you seen this page?"/>
+                    </div>
+                    {% if code is defined and message is defined %}
+                        <h1>ERROR {{ code }}</h1>
+                        <p>{{ message }}</p>
+                    {% else %}
+                        <h1>ERROR 404</h1>
+                        <p>Page not found.<br/>If you find this page, let us know.</p>
+                    {% endif %}
+                    <p>Go back to <a href="{{ configs.framework.base_url }}">homepage</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block foot %}
+{% endblock %}

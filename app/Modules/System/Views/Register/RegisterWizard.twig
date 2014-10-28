@@ -1,0 +1,187 @@
+{% extends "@Framework/Base.twig" %}
+
+{% set systemModuleActive = {'users': true} %}
+
+{% block cssResources %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/compiled/wizard.css') }}">
+    <style type="text/css">
+        #step3 button[type=submit] {
+            display: block;
+            margin: 15% auto;
+            width: 150px;
+            font-size: 30px;
+        }
+    </style>
+{% endblock %}
+
+{% block jsResources %}
+    <script src="{{ asset('js/jquery/wizard.js') }}"></script>
+    <script src="{{ asset('js/register.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>{%if userData.user_id %}{{"Edit User: "|trans ~ userData.username}}{% else %}{{"New User"|trans}}{% endif %}</h1>
+    <form action="/system/register/register" method="post" name="login" role='form'>
+        <input type='hidden' name='userId' value='{{ userData.user_id }}'>
+        <div class="col-lg-12">
+            <div class="main-box" style="min-height: 700px;">
+                <div id="registerWizard" class="wizard">
+                    <div class="wizard-inner">
+                        <ul class="steps">
+                            <li data-target="#step1" class="active"><span class="badge badge-primary">1</span>{{"Basic Data"|trans}}<span class="chevron"></span></li>
+                            <li data-target="#step2"><span class="badge">2</span>{{"Privileges"|trans}}<span class="chevron"></span></li>
+                            <li data-target="#step3"><span class="badge">3</span>Confirm<span class="chevron"></span></li>
+                        </ul>
+                        <div class="actions">
+                            <button type="button" class="btn btn-default btn-mini btn-prev">Prev <i class="icon-arrow-left"></i></button>
+                            <button type="button" class="btn btn-success btn-mini btn-next">Next<i class="icon-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="step-content">
+                        <div class="step-pane active" id="step1">
+                            <br />
+                            <div class="form-group">
+                                <label for="username" class="control-label">{{"Username"|trans}}:</label>
+                                <input type="text" placeholder="" id="username" name="username" value="{{ userData.username }}" autocomplete="on" required class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="control-label">{{"Password"|trans}}:</label>
+                                <input type="password" placeholder="" id="password" name="password" class="form-control" {% if not userData.user_id %}required{% endif %} />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="control-label">{{"Email"|trans}}:</label>
+                                <input type="email" id="email" name="email" autocomplete="on" value="{{ userData.email }}" class="form-control" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="referer_email" class="control-label">{{"Email Referer"|trans}}:</label>
+                                <input type="email" id="referer_email" name="referer_email" autocomplete="on" value="{{ userData.referer_email }}" class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="jira_username">{{"JIRA Username"|trans}}:</label>
+                                <input type="text" id="jira_username" name="jira_username" autocomplete="on" value="{{ userData.jira_username }}" class="form-control" />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="name">{{"Full Name"|trans}}:</label>
+                                <input type="text" id="name" name="name" autocomplete="on" value="{{ userData.name }}" class="form-control" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="language" class="control-label">{{"Admin Language"|trans}}:</label>
+                                <select name="language_id" id="language" class="form-control" required>
+                                    {% for language in languages %}
+                                        <option {% if (userData.language_id == language.language_id) %}selected{% endif %} value="{{ language.language_id }}">{{ language.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                                
+                            <div class="form-group">
+                                <label for="allowed_environments" class="control-label">{{"Allowed Environments"|trans}}:</label>
+                                <select id="allowed_environments" class="form-control" required multiple>
+                                    {% for environment in environments %}
+                                        <option {% if (environment in userData.allowed_environments) %}selected{% endif %} value="{{ environment }}">{{ environment|upper }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="market" class="control-label">{{"Markets"|trans}}:</label>
+                                <select multiple id="markets" class="form-control" required>
+                                    {% for market_id, market_name in markets %}
+                                        <option {% if market_id in userData.markets|keys %}selected{% endif %} value="{{ market_id }}">{{ market_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="step-pane" id="step2">
+                            <div class="row">
+                                <h3>{{"Group of Privileges"|trans}}:</h3>
+                                <div class="form-group">
+                                    <select name="role_id" id="role" class="form-control" required>
+                                        <option value="">{{ "Please select"|trans }}</option>
+                                        {% include ('@SystemModule/User/Template/RoleTree.twig') with {'roles': roles, 'level': 0, 'userData': userData} %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="perms spinner hidden" style="margin-top: 10%;">
+                                <i class="fa fa-spinner"></i>
+                            </div>
+                            <div class="row {% if not userData.user_id %}hidden{% endif %}" data-perms>
+                                <div class="panel-group accordion" id="accordion">
+                                    {% for module, controllers in actions %}
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}">
+                                                        {{ module }}
+                                                    </a>
+                                                </h4>
+                                            </div>
+
+                                            <div id="collapse{{ loop.index }}" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group pull-left">
+                                                        <div class="checkbox">
+                                                            <input id="module-{{ module }}" type="checkbox" name="" value="{{ module }}" data-perms-module="{{ module|lower }}">
+                                                            <label for="module-{{ module }}" class="h4">{{ module }}</label>
+                                                            <ul class="list-without-style">
+                                                                {% for controller, controllerActions in controllers %}
+                                                                    <li class="checkbox">
+                                                                        <input type="checkbox" id="{{ module }}-controller-{{controller}}" name="" value="{{ controller }}"  data-perms-module="{{ module|lower }}" data-perms-controller="{{ controller|lower }}">
+                                                                        <label class="h5" for="{{ module }}-controller-{{controller}}">{{controller}}</label>
+                                                                        <ul>
+                                                                           {% for action in controllerActions %}
+                                                                                <li class="checkbox">
+                                                                                    {% set actionName = module ~ '_' ~ controller ~ '_' ~ action %}
+                                                                                    {% set displayActionName = actionName|lower %}
+                                                                                    <input type="checkbox" id="{{ actionName|lower }}" name="privileges[]" value="{{ actionName|lower }}" data-perms-module="{{ module|lower }}" data-perms-controller="{{ controller|lower }}" data-perms-action="{{ action|lower }}" /> 
+                                                                                    <label for="{{ actionName|lower }}"> {{ displayActionName|trans }} </label>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-pane" id="step3">
+                            <button type="submit" class="btn btn-success">{{ "Save"|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    $( document ).ready(function() {
+        $("#markets").change(function() {
+            $(this).prop('name', 'markets[]');
+        });
+        $("#allowed_environments").change(function() {
+            $(this).prop('name', 'allowed_environments[]');
+        });
+        {% if userData.user_id %}
+            $('#role').change();
+        {% endif %}
+        {% for privilege in userData.privileges %}
+            $('#{{ (privilege|slice(1, 3))|join('_') }}').prop('checked', true);
+        {% endfor %}
+    });
+{% endblock %}

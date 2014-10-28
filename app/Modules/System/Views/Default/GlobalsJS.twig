@@ -1,0 +1,10 @@
+var FWK = {
+    configs: {{ configs|json_encode|raw }},
+    userLogged: {
+        id: {{ userLogged.id|json_encode()|raw }},
+        perms: {{ userLogged.getPrivileges|json_encode()|raw }},
+        email: {{ userLogged.getEmail|json_encode()|raw }},
+        name: {{ userLogged.getName|json_encode()|raw }},
+        username: {{ userLogged.getUsername|json_encode()|raw }}
+    }
+};

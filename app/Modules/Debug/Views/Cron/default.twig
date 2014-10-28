@@ -1,0 +1,100 @@
+{% extends "@Framework/Base.twig" %}
+{% set cronActive = true %}
+{% block jsResources %}
+    <script type="text/javascript">
+        $(function () {
+            bindToggleEnabled();
+        });
+
+        function bindToggleEnabled() {
+            $(".onoffswitch-checkbox").off('click');
+            $(".onoffswitch-checkbox").on('click', function () {
+                var that = $(this);
+                var cronId = that.val();
+                var enabled = +that.is(':checked');
+                jQuery.post('/debug/ajax/toggleCronEnable', {
+                    'cronId': cronId,
+                    'enabled': enabled
+                }, function (data) {
+                    if (data.success) {
+                        var title = 'Success';
+                        var message = 'Changes saved';
+                        var type = 'success';
+                    } else {
+                        that.prop('checked', !enabled);
+                        title = 'Error';
+                        message = 'Changes not saved';
+                        type = 'danger';
+                    }
+                    toast(message, title, 'fa fa-check-circle fa-fw fa-lg', type);
+                }, "json");
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="clearfix">
+        <h1 class="pull-left">Crons Listing</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><span>Name</span></th>
+                                <th><span>File name</span></th>
+                                <th><span>Module</span></th>
+                                <th><span>Description</span></th>
+                                <th><span>Last Execution</span></th>
+                                <th class="text-center"><span>Actions</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for cron in crons %}
+                            <tr data-cron-id="{{ cron.cron_id }}">
+                                <td>{{ cron.name }}</td>
+                                <td>{{ cron.file_name }}</td>
+                                <td>{{ cron.module }}</td>
+                                <td>{{ cron.description }}</td>
+                                <td>{{ cron.last_execution }}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-sm-6 text-right">
+                                            {% set cronFileName = cron.file_name|split('.')|first %}
+                                            <a href="http://syslog.olx.com/en-US/app/search/flashtimeline?q=search%20source%3D%22%2Fvar%2Flog%2Fphp%2Fphp-error.log%22%20AND%20host%3D%22toolx-server%22%20AND%20NOT(%22ansible%22)%20AND(%22Cron-{{ cronFileName }}%22)&earliest=-24h%40h&latest=now" target="_blank" class="table-link">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                            <a href="/debug/cron/edit?id={{ cron.cron_id }}" class="table-link">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <div class="onoffswitch onoffswitch-success">
+                                                <input type="checkbox" class="onoffswitch-checkbox" id="switch-{{cron.cron_id}}" {% if cron.enabled %}checked{% endif %} value="{{cron.cron_id}}">
+                                                <label class="onoffswitch-label" for="switch-{{cron.cron_id}}">
+                                                    <div class="onoffswitch-inner"></div>
+                                                    <div class="onoffswitch-switch"></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

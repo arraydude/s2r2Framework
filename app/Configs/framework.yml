@@ -1,0 +1,23 @@
+#Framework mandatories
+base_url: 'http://narinas.olx.com'
+push_url: 'https://narinas.olx.com'
+default_components:
+  module: 'test'
+  controller: 'default'
+  action: 'default'
+gravatar: 'https://www.gravatar.com/avatar/%s'
+logger:
+    exclude:
+        - system_user_getactivities
+        - system_activity_ajaxdebugparams
+        - system_activity_default
+        - system_settings_changepassword
+email_from:
+    system:
+        address: 'toolx@olx.com'
+        name: 'ToOLX'
+google:
+    client: '172927829945-tbnv7p80n2bu65913a9dg872j6bnagkh.apps.googleusercontent.com'
+    secret: 'ey2fsVGszESCfJjjepM52dmT'
+    responseUrl: '/system/login/googleResponse'
+    getPhotoUrl: 'https://www.googleapis.com/plus/v1/people/[userGoogleId]?fields=image&key=AIzaSyDfowzD2qEKvn3ceq4Xb0QJsUu7jHpxMMs'

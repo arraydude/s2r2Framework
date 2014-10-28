@@ -1,0 +1,40 @@
+<tr>
+    <td class="truncate-ellipsis">
+        <img src="{{ getProfilePhoto(element.profile_photo, element.email, 45) }}" class="img-circle"/>
+        <a href="/system/profile/?userId={{element.user_id}}" class="user-link">{{element.username}}</a>
+        <span class="user-subhead">{{element.role.name}}</span>
+    </td>
+    <td>
+        {{ element.created_date }}
+    </td>
+    <td>
+        <a href="#">{{element.email}}</a>
+    </td>
+    <td>
+        {% if (element.user_id != userLogged.id) and has_privilege('toggleEnable') and element.user_id != 1 %}
+            <div class="onoffswitch onoffswitch-success">
+                <input type="checkbox" class="onoffswitch-checkbox" id="switch-{{element.user_id}}" {% if element.enabled == '1'%}checked{% endif %} value="{{element.user_id}}">
+                <label class="onoffswitch-label" for="switch-{{element.user_id}}">
+                    <div class="onoffswitch-inner"></div>
+                    <div class="onoffswitch-switch"></div>
+                </label>
+            </div>
+        {% endif %}
+    </td>
+    <td style="width: 20%;">
+        <a href="/system/profile/?userId={{element.user_id}}" class="table-link">
+            <span class="fa-stack">
+                <i class="fa fa-square fa-stack-2x"></i>
+                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+            </span>
+        </a>
+        {% if has_privilege('register_edit') %}
+            <a href="/system/register/edit/?userId={{element.user_id}}" class="table-link">
+                <span class="fa-stack">
+                    <i class="fa fa-square fa-stack-2x"></i>
+                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                </span>
+            </a>
+        {% endif %}
+    </td>
+</tr>

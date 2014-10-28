@@ -1,0 +1,98 @@
+/* ToOLX Kernel Less Files */
+@import "variables.less";
+@import "bootstrap/mixins.less";
+@import "bootstrap/utilities.less";
+@import "mixins.less";
+@import "animations.less";
+@import "layout-overwrite.less";
+
+.truncate-ellipsis {
+  .text-overflow();
+}
+
+div.spinner {
+  .size(100%, auto);
+  text-align: center;
+  position: relative;
+  display: block;
+  padding: 10px;
+
+  i {
+    position: relative;
+    display: block;
+    margin: 0 auto 15px;
+    font-size: 60px;
+    width: 60px;
+    .animation(rotate 2s infinite linear);
+    color: @turquoise;
+    text-shadow: 0px 0px 18px gray;
+  }
+
+  &.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    .square(100%);
+
+    i {
+      z-index: 9999999;
+      top: 50%;
+      color: white;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      .square(100%);
+      background-color: #ececec;
+      box-shadow: 0px 0px 47px lightgray;
+      border-radius: 7px;
+      opacity: 0.5;
+      z-index: 999999;
+    }
+  }
+}
+
+i.spinner {
+  .animation(rotate 2s infinite linear);
+}
+
+.list-without-style * {
+  list-style: none;
+}
+
+.olx-violet {
+  color: @olxViolet;
+}
+
+.olx-green {
+  color: @olxGreen;
+}
+
+.olx-orange {
+  color: @olxOrange;
+}
+
+button.big-center-button {
+  display: block;
+  margin: 15% auto;
+  font-size: 30px;
+}
+
+.dir-rtl {
+  #text.direction(rtl);
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.toolx-logo {
+  &.header {
+    .icon-isologo {
+      margin-right: 5px;
+    }
+  }
+}

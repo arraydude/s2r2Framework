@@ -1,0 +1,171 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <title>R2S2 Framework</title>
+
+        <link rel="shortcut icon" href="{{ asset('favicon.ico', 'system') }}" type="image/x-icon" />
+        <link rel="stylesheet/less" type="text/css" href="{{ asset('less/base.less', 'System') }}" />
+
+        <!-- google font libraries -->
+        {#<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css' />#}
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css' />
+
+        <!--[if lt IE 9]>
+                <script src="{{ asset('js/libs/html5shiv.js', 'System') }}"></script>
+                <script src="{{ asset('js/libs/respond.min.js', 'System') }}"></script>
+        <![endif]-->
+        <!--[if lt IE 8]>
+                <link href="{{ asset('css/libs/font-awesome-ie7.min.css', 'System') }}" type="text/css" rel="stylesheet" />
+        <![endif]-->
+
+        {% block cssResources %}
+            <link rel="stylesheet/less" type="text/css" href="{{ asset('less/kernel.less', 'System') }}"/>
+        {% endblock %}
+
+        {#<script type="text/javascript">less = { env: 'development' };</script>#}
+        <script type="text/javascript" src="{{ asset('js/libs/less.js', 'System') }}"></script>
+
+        <!-- Jira Issue Colector -->
+        {% if userLogged %}
+            <script type="text/javascript" async src="https://jira.olx.com/s/d41d8cd98f00b204e9800998ecf8427e/en_US-vwehv3-1988229788/6265/21/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=7dc16821">
+            </script>
+        {% endif %}
+        <!-- End - Jira Issue Colector -->
+
+    </head>
+    <body id="{{ idBody }}" class="fade-in">
+        {% block head %}
+            {% include '@Framework/Header.twig' %}
+        {% endblock %}
+
+        <div class="container">
+            {% block container %}
+                <div class="row">
+                    <div class="col-md-2 col-sm-12" id="nav-col">
+                        <section id="col-left">
+                            <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li {% if systemModuleActive['dashboard'] %} class="active" {% endif %}>
+                                        <a href="{{ configs.framework.base_url }}">
+                                            <i class="fa fa-dashboard"></i>
+                                            <span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                    {% if 'system' in userLogged.getModules() %}
+                                        <li {% if systemModuleActive['users'] %} class="open active" {% endif %}>
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-users"></i>
+                                                <span>Users</span>
+                                                <i class="fa fa-chevron-circle-down drop-icon"></i>
+                                            </a>
+                                            <ul class="submenu" {% if systemModuleActive['users'] %} style="display:block;" {% endif %}>
+                                                <li>
+                                                    <a href="/system/register">
+                                                        {{ "New"|trans }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/system/user/list">
+                                                        {{ "List"|trans }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/system/profile">
+                                                        {{ "Profile"|trans }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li {% if systemModuleActive['roles'] %} class="open active" {% endif %}>
+                                            <a href="#" class="dropdown-toggle">
+                                                <i class="fa fa-key"></i>
+                                                <span>Roles</span>
+                                                <i class="fa fa-chevron-circle-down drop-icon"></i>
+                                            </a>
+                                            <ul class="submenu" {% if systemModuleActive['roles'] %}style="display:block"{% endif %}>
+                                                <li>
+                                                    <a href="/system/roles/new">
+                                                        {{ "New"|trans }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/system/roles/list">
+                                                        {{ "List"|trans }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        {% if has_privilege('system_activity_default') %}
+                                            <li {% if systemModuleActive['activity'] %} class="active" {% endif %}>
+                                                <a href="/system/activity">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <span>{{ "Activity"|trans }}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% for module in userLogged.getModules() if module != 'system' %}
+                                        {% if getComponents().module|lower == module|lower %}
+                                            {% set moduleActive = true %}
+                                        {% else %}
+                                            {% set moduleActive = false %}
+                                        {% endif %}
+                                        <li {% if moduleActive %}class="active open"{% endif %}>
+                                            {% include '@' ~ module|capitalize ~ 'Module/menu.twig' with { 'moduleActive': moduleActive } %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-10 col-sm-12" id="content-wrapper">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+
+        {% block foot %}
+            {#% include '@Framework/Footer.twig' %#}
+        {% endblock %}
+
+        <!-- global scripts -->
+        <script src="{{ asset('js/jquery/jquery.js', 'System') }}"></script>
+        <script src="{{ asset('js/jquery/jquery-ui.custom.min.js', 'System') }}"></script>
+        <script src="{{ asset('js/bootstrap/bootstrap.min.js', 'System') }}"></script>
+        <script src="{{ asset('js/bootstrap/bootbox.min.js', 'System') }}"></script>
+        <script src="{{ asset('js/jquery/jquery.slimscroll.min.js', 'System') }}"></script>
+        <script src="{{ asset('js/libs/moment.min.js', 'System') }}"></script>
+        <script src="{{ asset('js/fwk/fwk.jquery.toastNotifications.min.js', 'System') }}" async></script>
+
+        <script src="{{ asset('js/libs/md5.min.js', 'System') }}"></script>
+        <script src="{{ asset('js/libs/twig/twig.min.js', 'System') }}"></script>
+        <script src="{{ asset('js/libs/twig/twigExtensions.js', 'System') }}"></script>
+
+        <script src="/system/default/globalsjs/" type="text/javascript"></script>
+
+        <!-- theme scripts -->
+        <script src="{{ asset('js/scripts.min.js', 'System') }}"></script>
+
+        <!-- sToolx -->
+        <script src="{{ asset('js/libs/sToolx.js', 'System') }}"></script>
+
+        {% block jsResources %}
+        {% endblock %}
+
+        <script type="text/javascript">
+            $(function() {
+                {% block javascripts %}
+                {% endblock %}
+            });
+        </script>
+    </body>
+</html>
+{% endspaceless %}

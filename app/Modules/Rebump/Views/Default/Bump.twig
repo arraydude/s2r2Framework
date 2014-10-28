@@ -1,0 +1,84 @@
+{% extends "@Framework/Base.twig" %}
+
+{% block cssResources %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/libs/dropzone.min.css', 'system') }}"/>
+{% endblock %}
+
+{% block jsResources %}
+    <script src="{{ asset('js/libs/dropzone.min.js', 'system') }}"></script>
+    <script src="{{ asset('js/bump.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>ReBump Tool</h1>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box" style="min-height: 130px">
+                <h2>Single Item Rebump</h2>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input id="item_id" type="text" placeholder="Enter Item ID" class="form-control">
+
+                        <button id="single_bump" type="button" class="btn btn-success">
+                            <i id="single_bump_icon" class="fa fa-level-up"></i> 
+                            Bump!
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="main-box" style="min-height: 820px;">
+                <h2>Drag &amp; Drop file upload</h2>
+
+                <div id="dropzone">
+                    <form id="rebump-upload" class="dropzone dz-clickable" action="/Rebump/Upload/BumpFile"
+                          enctype="multipart/form-data">
+                        <div class="dz-default dz-message">
+                            <span>Drop files here to upload</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="main-box" style="min-height: 820px;">
+                <h2>List uploads</h2>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover list-files">
+                        <thead>
+                            <tr>
+                                <th><span class="text-left">Id</span></th>
+                                <th><span>User</span></th>
+                                <th class="text-center"><span>Status</span></th>
+                                <th class="text-center"><span>Created</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for file in list %}
+                                <tr>
+                                    <td class="text-left">
+                                        {{ file.file_id }}
+                                    </td>
+                                    <td>
+                                        {{ file.user.name }}
+                                    </td>
+                                    <td class="text-center">
+                                        {% set statusClass = {'Pending': 'warning', 'Running': 'info', 'Finished': 'success'} %}
+                                        <span class="label label-{{ statusClass[file.status] }}">{{ file.status }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        {{ file.created_date }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

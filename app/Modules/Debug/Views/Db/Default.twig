@@ -1,0 +1,39 @@
+{% extends "@Framework/Base.twig" %}
+
+{% block jsResources %}
+{% endblock %}
+
+{% block cssResources %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="clearfix">
+        <h1 class="pull-left">DB Query</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <form action="/debug/db" method="post">
+                    {% if query != '' %}
+                        {% if success %}
+                            <div class="alert alert-block alert-success">
+                                <h4>Query executed ok!</h4>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-block alert-danger">
+                                <h4>Query failed :(</h4>
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="form-group">
+                        <textarea name="query" rows="15" class="form-control" placeholder="Only for INSERT, UPDATE and DELETE">{{ query }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Run SQL</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

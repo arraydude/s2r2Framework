@@ -1,0 +1,189 @@
+{% extends "@Framework/Base.twig" %}
+
+{% set systemModuleActive = {'users': true} %}
+
+{% block cssResources %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/libs/jquery-jvectormap-1.2.2.css') }}" type="text/css"/>
+{% endblock %}
+
+{% block jsResources %}
+    <script type="text/javascript">
+        var user = {{ user|json_encode()|raw }};
+        Twig.addTemplate('activityList', {{ stringifyTwig('/Profile/Template/ActivityList.twig', 'SystemModule')|raw }});
+    </script>
+    <script src="{{ asset('js/fwk/fwk.jquery.pager.min.js') }}"></script>
+    <script src="{{ asset('js/profile.js') }}"></script>
+{% endblock %}
+    
+{% block content %}
+    <h1>User Profile</h1>
+    <div class="row" id="user-profile">
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <div class="main-box clearfix">
+                <h2>{{ user.name }}</h2>
+
+                <div class="profile-status hidden">
+                    <i class="fa fa-check-circle"></i> Online
+                </div>
+                <img src="{{ user.profile_photo }}" alt="" class="profile-img img-responsive center-block"/>
+
+                <div class="profile-label">
+                    <span class="label label-danger">{{ user.role_name|trans }}</span>
+                </div>
+
+                <div class="profile-stars hidden">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <span>Super User</span>
+                </div>
+
+                <div class="profile-since hidden">
+                    Member since: {{ user.created_date|date("m-d-Y") }}
+                </div>
+
+                <div class="profile-details">
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-briefcase"></i>Modules: <span>{{ user.modules|length }}</span></li>
+                        <li><i class="fa-li fa fa-tasks"></i>Tasks done: <span>{{ user.activities|length }}</span></li>
+                        <li><i class="fa-li fa fa-calendar"></i>Last login:
+                            <span>{{ user.last_login|date('m-d-Y') }}</span></li>
+                        <li><i class="fa-li fa fa-clock-o"></i>Member since:
+                            <span>{{ user.created_date|date('m-d-Y') }}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-md-8 col-sm-8">
+            <div class="main-box clearfix">
+                <div class="profile-header">
+                    <h3><span>User info</span></h3>
+                </div>
+
+                <div class="row profile-user-info">
+                    <div class="col-sm-6">
+                        <div class="profile-user-details clearfix">
+                            <div class="profile-user-details-label">
+                                Name
+                            </div>
+                            <div class="profile-user-details-value">
+                                {{ user.name }}
+                            </div>
+                        </div>
+                        <div class="profile-user-details clearfix">
+                            <div class="profile-user-details-label">
+                                Username
+                            </div>
+                            <div class="profile-user-details-value">
+                                {{ user.username }}
+                            </div>
+                        </div>
+                        <div class="profile-user-details clearfix">
+                            <div class="profile-user-details-label">
+                                Email
+                            </div>
+                            <div class="profile-user-details-value">
+                                {{ user.email }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="profile-user-details clearfix">
+                            <div class="profile-user-details-label">
+                                Market
+                            </div>
+                            <div class="profile-user-details-value">
+                                {% for market in user.markets %}
+                                    {{ market }},
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="profile-user-details clearfix">
+                            <div class="profile-user-details-label">
+                                Environments
+                            </div>
+                            <div class="profile-user-details-value">
+                                {% for environment in user.environments %}
+                                    {{ environment|upper }},
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="profile-user-details clearfix">
+                            <div class="profile-user-details-label">
+                                Language
+                            </div>
+                            <div class="profile-user-details-value">
+                                {{ user.language.name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs-wrapper profile-tabs">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab-activity" data-toggle="tab">Activity</a></li>
+                        <li><a href="#tab-privileges" data-toggle="tab">Privileges</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade in active" id="tab-activity">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody data-activities-list>
+                                    {% for element in user.activities %}
+                                        {% include('@SystemModule/Profile/Template/ActivityList.twig') %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button data-add-more="activities" class="btn btn-default btn-large"
+                                    data-target="table.table [data-activities-list]"
+                                    data-src="system_user_getactivities" style="width: 100%;"><i
+                                        class="fa fa-plus-square"></i></button>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-privileges">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th><span>Role</span></th>
+                                        <th class="text-right"><span>Module</span></th>
+                                        <th class="text-center"><span>Controller</span></th>
+                                        <th class="text-center"><span>Action</span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for privilege in user.privileges %}
+                                        <tr>
+                                            <td>
+                                                {{ roles[privilege.role_id] }}
+                                            </td>
+                                            <td class="text-right">
+                                                {{ privilege.module }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ privilege.controller }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ privilege.action }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

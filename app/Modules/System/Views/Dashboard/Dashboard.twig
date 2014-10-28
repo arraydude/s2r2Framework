@@ -1,0 +1,53 @@
+{% extends  '@Framework/Base.twig' %}
+
+{% set idBody = '' %}
+{% set systemModuleActive = {'dashboard': true} %}
+
+{% block cssResources %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}"/>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <h1>Dashboard</h1>
+        {% block content %}
+        {% endblock %}
+        <div id="dashboard" class="container">
+            {% if 'system' in modules %}
+                <div class="module">
+                    <a href="/system/user/list" class="menu dropdown-toggle">
+                        <i class="fa fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </div>
+                <div class="module">
+                    <a href="/system/roles/list" class="menu dropdown-toggle">
+                        <i class="fa fa-key"></i>
+                        <span>Roles</span>
+                    </a>
+                </div>
+                {% if has_privilege('system_activity_default') %}
+                    <div class="module">
+                        <a href="/system/activity" class="menu dropdown-toggle">
+                            <i class="fa fa-calendar"></i>
+                            <span>Activity</span>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+            {% for module in modules if module|lower != 'system' %}
+                <div class="module">
+                    {% include '@' ~ module|capitalize ~ 'Module/menu.twig' with { 'moduleActive': false } %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% if userLogged.getModules()|length < 4 and 'system' not in modules %}
+        $("#dashboard").css('width', '170px');
+    {% endif %}
+    $("button.navbar-toggle").hide();
+{% endblock %}

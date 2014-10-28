@@ -1,0 +1,15 @@
+<tr>
+    <td class="text-center">
+    {% if element.module == 'system' %}
+        <i class="fa fa-gears"></i>
+    {% else %}
+        <i class="fa fa-legal"></i>
+    {% endif %}
+    </td>
+    <td>
+        {{ user.name }} opened <span class="label label-warning">{{ element.controller }}</span> <span class="label label-primary">{{ element.action }}</span> action in <a href="/{{ element.module }}"><span class="label {% if element.module == 'system' %}label-danger{% else %}label-success{% endif %}">{{ element.module|upper }}</span></a> module.
+    </td>
+    <td>
+        {{ element.created_date }}
+    </td>
+</tr>

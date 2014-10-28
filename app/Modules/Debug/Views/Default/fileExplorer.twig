@@ -1,0 +1,126 @@
+{% extends "@Framework/Base.twig" %}
+
+{% set fileExplorerActive = true %}
+
+{% block jsResources %}
+    <script src="{{ asset('js/jquery/jquery.nestable.js', 'System') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="clearfix">
+        <h1 class="pull-left">File Explorer</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+
+                <div id="nestable-menu">
+                    <button type="button" class="btn btn-primary" data-action="expand-all">Expand All</button>
+                    <button type="button" class="btn btn-danger" data-action="collapse-all">Collapse All</button>
+                </div>
+
+                <div class="row cf nestable-lists">
+                                
+                    <div class="col-md-6 dd" id="nestable">
+
+                        {% for folder in folders %}
+
+                            <li class="dd-item">
+
+                                <div class="dd-handle">
+                                    {{ folder.name }}
+                                    <div class="nested-links">
+                                        <span class="fa fa-folder-open"></span>
+                                    </div>
+                                </div>
+
+                                <ol class="dd-list">
+                                    <ol class="dd-list">
+
+                                         {% for folderLevel2 in folder.subfolders %}
+                                            <li class="dd-item">
+
+                                                <div class="dd-handle">
+                                                    {{ folderLevel2.name }}
+                                                     <div class="nested-links">
+                                                        <span class="fa fa-folder-open"></span>
+                                                    </div>
+                                                </div>
+
+                                                <ol class="dd-list">
+                                                    <!-- Files of Level 2 -->
+                                                    {% for fileLevel2 in folderLevel2.files %}
+                                                        <li class="dd-item">
+                                                            <div class="dd-handle" style="background-color: #D0F8BD;">
+                                                                {{ fileLevel2 }}
+                                                                <a href="download/?file={{ folder.name }}/{{folderLevel2.name }}/{{ fileLevel2 }}">
+                                                                    <div class="nested-links">
+                                                                        <span class="fa fa-download"></span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ol>
+                                            </li> 
+                                        {% endfor %}
+
+                                        <!-- Files of Level 1 -->
+                                        {% for file in folder.files %}
+                                            <li class="dd-item">
+                                                <div class="dd-handle" style="background-color: #D0F8BD;">
+                                                    {{ file }}
+                                                    <a href="download/?file={{ folder.name }}/{{ file }}">
+                                                        <div class="nested-links">
+                                                            <span class="fa fa-download"></span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+
+                                    </ol>
+                                </ol>
+                            </li>
+                        {% endfor %}
+
+                        <!-- Files of Root folder -->
+                        {% for file in rootFiles %}
+                            <li class="dd-item">
+                                <div class="dd-handle" style="background-color: #D0F8BD;">
+                                    {{ file }}
+                                    <a href="download/?file={{ file }}">
+                                        <div class="nested-links">
+                                            <span class="fa fa-download"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                    </div>          
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    $('#nestable').nestable({
+        group: 1,
+    });
+
+    $('.dd').nestable('collapseAll');
+
+    $('#nestable-menu').on('click', function(e){
+        var target = $(e.target),
+            action = target.data('action');
+        if (action === 'expand-all') {
+            $('.dd').nestable('expandAll');
+        }
+        if (action === 'collapse-all') {
+            $('.dd').nestable('collapseAll');
+        }
+    });
+{% endblock %}

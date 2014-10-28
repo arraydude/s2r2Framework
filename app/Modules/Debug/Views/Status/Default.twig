@@ -1,0 +1,92 @@
+{% extends  '@Framework/Base.twig' %}
+{% set idBody = '' %}
+
+{% block head %}
+<header class="navbar" id="header-navbar">
+    <div class="container">
+        <a href="/" id="logo" class="navbar-brand col-md-3 col-sm-4 col-xs-12">
+            <figure class="toolx-logo header">
+                <i class="icon-isologo"></i>
+                <i class="icon-logo"></i>
+            </figure>
+        </a>
+        <div class="nav-no-collapse pull-right" id="header-nav">
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown profile-dropdown">
+                    {% if userLogged %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{{userLogged.getProfilePhoto(35)}}" alt="" class="img-circle"/>
+                            <span class="hidden-xs">{{ userLogged.getName() }}</span> <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/system/profile"><i class="fa fa-user"></i>Profile</a></li>
+                            <li><a href="/system/settings"><i class="fa fa-cog"></i>Settings</a></li>
+                            <li><a href="/system/login/logout"><i class="fa fa-power-off"></i>Logout</a></li>
+                        </ul>
+                    {% endif %}
+                </li>
+
+                {% if userLogged %}
+                    <li class="hidden-xxs">
+                        <a class="btn" href="/system/login/logout">
+                            <i class="fa fa-power-off"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block container %}
+    {% block content %}
+        <h1>Dependencies Status</h1>
+
+        <span class="label" style="background-color:black;" id="statusMsg">Test availability of resources ...</span>
+        <div class="progress progress-striped progress-4x active" style="margin-top: 10px; background-color:#363636;">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" 
+                style="width: 0%" id="statusBar">
+                 <span class="label" style="color:black;" id="statusPercent">0%</span>
+            </div>
+        </div>
+        <div id="status"></div>
+    {% endblock %}
+{% endblock %}
+
+
+{% block jsResources %}
+    <script type="text/javascript">
+        $(function() {
+            
+            var percent = 0;
+            var progress = setInterval(updateBar, 1000);
+
+            $.ajax('/debug/status/get', {
+                data: {},
+                success: function (r) {
+                    clearInterval(progress);
+                    $('#statusMsg').html('Done!');
+                    $('#statusBar').attr('style', 'width:100%');
+                    $('#statusPercent').html('100%');
+                    $('#status').html(r);
+                },
+                error: function (e) {
+                    clearInterval(progress);
+                    $('#statusMsg').html('Error, please try again');
+                }
+            });
+
+            function updateBar() {
+                console.log(percent);
+                percent++;
+                if (percent > 99) percent = 90;
+                $('#statusBar').attr('style', 'width:' + percent + '%');
+                $('#statusPercent').html(percent + '%');
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block foot %}
+{% endblock %}

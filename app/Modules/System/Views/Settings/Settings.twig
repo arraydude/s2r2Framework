@@ -1,0 +1,88 @@
+{% extends "@Framework/Base.twig" %}
+
+{% set systemModuleActive = {'users': true} %}
+
+{% block jsResources %}
+    <script src="{{ asset('js/libs/md5.js') }}"></script>
+    <script src="{{ asset('js/jquery/validator.min.js') }}"></script>
+{% endblock %}
+    
+{% block content %}
+     
+    <h1>Settings</h1>
+    <div class="main-box">
+        <h2>{{"Basic Data"|trans}}</h2>
+        <form action="/system/settings/save" method="post" name="settings" data-toggle="validator">
+            <div class="form-group">
+                <label for="email">{{"Email"|trans}}:</label>
+                <input type="email" disabled value="{{userLogged.email}}" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="username">{{"Username"|trans}}:</label>
+                <input type="text" placeholder="" disabled value="{{userLogged.username}}" autocomplete="on" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">{{"Full Name"|trans}}:</label>
+                <input type="text" placeholder="" id="name" name="name" value="{{userLogged.name}}" autocomplete="on" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="referer_email">{{"Referer email"|trans}}:</label>
+                <input type="email" placeholder="" id="referer_email" name="referer_email" value="{{userLogged.refererEmail}}" autocomplete="on" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="language">{{"Admin Language"|trans}}:</label>
+                <select name="language_id" id="language" class="form-control">
+                    {% for language in languages %}
+                        <option {% if userLogged.languageId == language.language_id %}selected{% endif %} value="{{ language.language_id }}">{{ language.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+                
+            <div class="form-group clearfix">
+                <figure class="pull-left" style="margin-right: 10px;">
+                    <img id="gravatarThumb" src="{{ gravatarUrl(userLogged.getGravatarAccount()) }}"/>
+                </figure>
+                <span>
+                    <a href="http://gravatar.com" target="_blank">
+                        <label for="username" style="cursor:pointer;">{{"Gravatar account"|trans}}:</label>
+                    </a>
+                    <input type="email" placeholder="{{"Gravatar email"|trans}}" name="gravatar" id="gravatar" value="{{userLogged.getGravatarAccount()}}" autocomplete="on" class="form-control" style="width:300px"/>
+                </span>
+            </div>
+
+            <input type="submit" value="{{"Save"|trans}}" class="btn btn-success" />
+        </form>
+
+        {% if error %}
+            <span class="error">{{ error }}</span>
+        {% endif %}
+    </div>
+    <div class="main-box">
+        <h2>{{"Change Password"|trans}}</h2>
+        <form action="/system/settings/changePassword" method="post" id="changePassword" data-toggle="validator">
+            <div class="form-group">
+                <label for="password">{{"New Password"|trans}}:</label>
+                <input type="password" id="password" name="password" value="" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">{{"Confirm Password"|trans}}:</label>
+                <input type="password" id="password_confirm" name="password_repetition" value="" class="form-control" required data-match="#password" data-match-error="{{ "Password mismatch"|trans }}" />
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <input type="submit" value="{{"Save"|trans}}" class="btn btn-success" />
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    $("input[name='gravatar']").on('keyup', function() {
+        var mail = $(this).val();
+        $('#gravatarThumb').attr('src', gravatarUrl(mail));
+    });
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "@Framework/Base.twig" %}
+
+{% set systemModuleActive = {'roles': true} %}
+
+{% block jsResources %}
+    <script src="{{ asset('js/roles.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>Role</h1>
+<form action="/system/roles/save" method="post" name="login" role='form'>
+    <div class="main-box">
+        <h2>Basic data</h2>
+        <div class="form-group">
+            <label for="name">{{"Name"|trans}}:</label>
+            <input type="text" id="name" name="name" value="{% if name %}{{ name }}{% endif %}" class="form-control" required/>
+        </div>
+    </div>
+
+    <div class="main-box">
+        <h2>Privileges</h2>
+
+        <div class="row" data-perms>
+            <div class="panel-group accordion" id="accordion">
+                {% for module, controllers in privileges %}
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}">
+                                    {{ module }}
+                                </a>
+                            </h4>
+                        </div>
+
+                        <div id="collapse{{ loop.index }}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group pull-left">
+                                    <div class="checkbox">
+                                        <input id="module-{{ module }}" type="checkbox" name="" value="{{ module }}" data-perms-module="{{ module|lower }}">
+                                        <label for="module-{{ module }}" class="h4">{{ module }}</label>
+                                        <ul class="list-without-style">
+                                            {% for controller, controllerActions in controllers %}
+                                                <li class="checkbox">
+                                                    <input type="checkbox" id="{{ module }}-controller-{{controller}}" name="" value="{{ controller }}"  data-perms-module="{{ module|lower }}" data-perms-controller="{{ controller|lower }}">
+                                                    <label class="h5" for="{{ module }}-controller-{{controller}}">{{controller}}</label>
+                                                    <ul>
+                                                        {% for action in controllerActions %}
+                                                            <li class="checkbox">
+                                                                {% set actionName = module ~ '_' ~ controller ~ '_' ~ action %}
+                                                                {% set displayActionName = actionName|lower %}
+                                                                <input type="checkbox" id="{{ actionName|lower }}" name="privileges[]" value="{{ actionName|lower }}" data-perms-module="{{ module|lower }}" data-perms-controller="{{ controller|lower }}" data-perms-action="{{ action|lower }}" /> 
+                                                                <label for="{{ actionName|lower }}"> {{ displayActionName|trans }} </label>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% endfor %}
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    {% if roleId %}
+        <input type="hidden" name="roleId" value="{{ roleId }}" />
+    {% endif %}
+    <button type="submit" class="btn btn-success btn-large" style="height: 50px;width: 100%;">{{"Save"|trans}}</button>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    {% for privilege in checked %}
+        $('#{{ privilege|slice(1)|join('_') }}').prop('checked', true);
+    {% endfor %}
+{% endblock %}

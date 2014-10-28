@@ -1,0 +1,8 @@
+{% for role in roles %}
+    <option {% if userData.role_id == role.role_id %}selected{% endif %} value="{{ role.role_id }}">
+        {% for i in range(0, level) %}&nbsp;&nbsp;&nbsp;{% endfor %}&#x251c;&#x2500;
+        {{ role.name }}
+    </option>
+
+    {% include ('@SystemModule/User/Template/RoleTree.twig') with {'roles': role.children, 'level': level + 1, 'userData': userData} %}
+{% endfor %}

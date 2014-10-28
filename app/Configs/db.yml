@@ -1,0 +1,7 @@
+## Database Environments Configs.
+default:
+    dbname: 'R2S2'
+    user: 'root'
+    password: 'notoques'
+    host: '127.0.0.1'
+    driver: 'pdo_mysql'

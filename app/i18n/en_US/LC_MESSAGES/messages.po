@@ -1,0 +1,174 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TOOLX\n"
+"POT-Creation-Date: 2014-04-01 10:59-0300\n"
+"PO-Revision-Date: 2014-09-29 11:26-0300\n"
+"Last-Translator: Fernando Rivas <fernando.rivas@olx.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Language: en_US\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "invalid_credentials"
+msgstr "Invalid credentials"
+
+msgid "mail_not_registered"
+msgstr "The mail is not registered"
+
+msgid "modules"
+msgstr "modules"
+
+msgid "system_activity_default"
+msgstr "Home Page"
+
+msgid "system_activity_list"
+msgstr "List of all Activities/Logs"
+
+msgid "system_register_default"
+msgstr "Home Page"
+
+msgid "system_register_register"
+msgstr "Register Save Button"
+
+msgid "system_register_edit"
+msgstr "Edit Register Info Page"
+
+msgid "system_register_getprivilegesfromrole"
+msgstr "Get Privileges Ajax Method"
+
+msgid "system_roles_list"
+msgstr "List of Roles Page"
+
+msgid "system_roles_new"
+msgstr "Create Role Page"
+
+msgid "system_roles_edit"
+msgstr "Edit Role Page"
+
+msgid "system_roles_getprivilegesbyrole"
+msgstr "Get Privileges by Role Ajax Method"
+
+msgid "system_roles_save"
+msgstr "Save Role Button"
+
+msgid "system_roles_delete"
+msgstr "Delete Role Button"
+
+msgid "system_user_list"
+msgstr "List of Users"
+
+msgid "system_user_profile"
+msgstr "Profile User Page"
+
+msgid "system_user_toggleenable"
+msgstr "Enabled/Disabled Users Toogle"
+
+msgid "system_user_getactivities"
+msgstr "Activities from User"
+
+msgid "categorymigration_default_default"
+msgstr "Home Page"
+
+msgid "categorymigration_default_newmigration"
+msgstr "Create New Migration"
+
+msgid "categorymigration_default_wizardmigration"
+msgstr "Migration Tree ABM Page"
+
+msgid "categorymigration_default_savejson"
+msgstr "Save current status of Migration"
+
+msgid "categorymigration_default_deletemigration"
+msgstr "Delete Migration Button"
+
+msgid "categorymigration_default_changestatus"
+msgstr "Change Migration Status"
+
+msgid "categorymigration_migrationmanager_default"
+msgstr "List of Migrations"
+
+msgid "categorymigration_migrationmanager_viewmigration"
+msgstr "View Migration"
+
+msgid "categorymigration_migrationmanager_changestatus"
+msgstr "Change Migration Status"
+
+msgid "system_activity_ajaxgetactivities"
+msgstr "Search"
+
+msgid "system_activity_ajaxdebugparams"
+msgstr "Show Post/Get params"
+
+msgid "status_progress_description"
+msgstr "this migration is under construction"
+
+msgid "categorymigration_default_notifymanager"
+msgstr "Send notifications"
+
+msgid "categorymigration_migrationmanager_savejson"
+msgstr "Save current status of Migration"
+
+msgid "keywords_default_default"
+msgstr "List of Reports"
+
+msgid "keywords_default_new"
+msgstr "Create new Report"
+
+msgid "keywords_default_getcategoriesbycountry"
+msgstr "Retrieve list of Categories by Country"
+
+msgid "keywords_default_savereport"
+msgstr "Save Report Button"
+
+msgid "keywords_default_getsublevels"
+msgstr "Show list of L1 and L2 for each Report in Listing"
+
+msgid "keywords_default_deletereport"
+msgstr "Delete Report Button"
+
+msgid "categorymigration_migrationmanager_runreport"
+msgstr "Run migration report"
+
+msgid "keywords_default_piechart"
+msgstr "Generate Pie Chart"
+
+msgid "keywords_download_default"
+msgstr "Download keywords report"
+
+msgid "metatag_changelist_default"
+msgstr "Changelist history"
+
+msgid "metatag_manager_default"
+msgstr "See Packages in progress"
+
+msgid "metatag_manager_createpackage"
+msgstr "Create new Package"
+
+msgid "metatag_manager_deletepackage"
+msgstr "Delete a Package (Ajax)"
+
+msgid "metatag_manager_renamepackage"
+msgstr "Rename a Package (Ajax)"
+
+msgid "rebump_default_default"
+msgstr "Rebump Module"
+
+msgid "rebump_upload_bumpfile"
+msgstr "Upload File with Items ids"
+
+msgid "rebump_upload_singlebump"
+msgstr "Single Item Rebump"
+
+msgid "smartling_default_default"
+msgstr "Messages & Keys Manager"
+
+msgid "marketing_campaignurl_default"
+msgstr "Add new campaign url"
+
+msgid "exprules_default_default"
+msgstr "Generate CSV with deprecation rules"

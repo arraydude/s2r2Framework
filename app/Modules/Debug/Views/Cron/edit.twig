@@ -1,0 +1,39 @@
+{% extends "@Framework/Base.twig" %}
+
+{% block jsResources %}
+    <script src="{{ asset('js/jquery/validator.min.js', 'System') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="clearfix">
+        <h1 class="pull-left">Edit Cron: {{ cron.name }}</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box">
+                <form role="form" method="post" data-toggle="validator">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="{{ cron.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="file_name">FileName:</label>
+                        <input type="text" class="form-control" id="file_name" name="file_name" placeholder="Enter FileName" value="{{ cron.file_name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required>{{ cron.description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="module">Module:</label>
+                        <input type="text" class="form-control" id="module" name="module" placeholder="Enter Module" value="{{ cron.module }}" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

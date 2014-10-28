@@ -1,0 +1,95 @@
+#dashboard.container {
+    width: 656px;
+    margin: 100px auto;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 0;
+}
+
+#dashboard.container .module {
+    background-color: white;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    float: left;
+    box-sizing: border-box;
+    border: 1px solid lightgray;
+    display: block;
+    position: relative;
+    margin-right: 10px;
+    padding: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
+}
+
+#dashboard.container .module .submenu {
+    display: none;
+}
+
+#dashboard.container .module a.menu:hover {
+    text-decoration: none;
+}
+
+#dashboard.container .module a.menu:hover  i.fa:first-child{
+    text-shadow: 0 0 15px gray;
+}
+
+#dashboard.container .module a.menu:hover  span{
+    color: darkgray;
+}
+
+#dashboard.container .module a.menu i.drop-icon {
+    display: none;
+}
+
+#dashboard.container .module a.menu i.fa:first-child {
+    text-align: center;
+    clear: both;
+    font-size: 50px;
+    display: block;
+    margin-top: 25px;
+    transition: all 0.5s ease;
+}
+
+#dashboard.container .module a.menu span {
+    text-align: center;
+    font-size: 25px;
+    color: gray;
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 700px) {
+    #dashboard.container {
+        width: 490px;
+    }
+}
+
+@media screen and (max-width: 500px){
+    #dashboard.container {
+        width: 330px;
+    }
+
+}
+
+@media screen and (max-width: 430px) {
+    body {
+        overflow-x: hidden;
+    }
+}
+
+@media screen and (max-width: 325px) {
+    #dashboard.container {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 319px) {
+    #dashboard.container {
+        width: 170px;
+    }
+}

@@ -1,0 +1,28 @@
+#!/bin/bash
+echo "Welcome to module generator"
+
+echo "Please enter the namespace ( only first uppercase ): "
+read NAME
+
+mkdir ./Modules/$NAME
+mkdir ./Modules/$NAME/Controllers
+mkdir ./Modules/$NAME/Models
+mkdir ./Modules/$NAME/Views
+mkdir ./Modules/$NAME/Views/Default
+
+template=`cat ./toolkit/template/menu.twig`
+echo ${template//@ModuleName/$NAME} >> ./Modules/$NAME/Views/menu.twig
+
+mkdir ./Modules/$NAME/Configs
+mkdir ./Modules/$NAME/Public
+touch ./Modules/$NAME/Controllers/DefaultController.php
+touch ./Modules/$NAME/Views/Default/Default.twig
+
+echo "<?php" >> ./Modules/$NAME/Controllers/DefaultController.php
+echo -e "\nnamespace $NAME\Controllers;" >> ./Modules/$NAME/Controllers/DefaultController.php
+
+cat ./toolkit/template/DefaultController.php >> ./Modules/$NAME/Controllers/DefaultController.php
+cat ./toolkit/template/Default.twig >> ./Modules/$NAME/Views/Default/Default.twig
+
+
+echo "Module $NAME created successfully! ;)"

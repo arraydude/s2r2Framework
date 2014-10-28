@@ -1,0 +1,17 @@
+namespaces:
+    Google_: 
+    Twig_: twig/twig/lib
+    Twig_Extensions_: twig/extensions/lib
+    Doctrine\DBAL\: doctrine/dbal/lib
+    Doctrine\Common\Lexer\: doctrine/lexer/lib
+    Doctrine\Common\Inflector\: doctrine/inflector/lib
+    Doctrine\Common\Collections\: doctrine/collections/lib
+    Doctrine\Common\Cache\: doctrine/cache/lib
+    Doctrine\Common\Annotations\: doctrine/annotations/lib
+    Doctrine\Common\: doctrine/common/lib
+    
+classMap:
+    PHPMailer: phpmailer/phpmailer/class.phpmailer.php
+    POP3: phpmailer/phpmailer/class.pop3.php
+    SMTP: phpmailer/phpmailer/class.smtp.php
+    phpmailerException: phpmailer/phpmailer/class.phpmailer.php

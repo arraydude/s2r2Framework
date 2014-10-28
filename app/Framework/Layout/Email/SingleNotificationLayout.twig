@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="-webkit-text-size-adjust: none;margin: 0;padding: 0;background-color: #EEEEEE;width: 100%;">
+<!-- // End Template Preheader \ -->
+<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer" align="center" style="border: 1px solid #BBBBBB;background-color: #FDFDFD;">
+    <tr>
+        <td align="center" valign="top" style="border-collapse: collapse;">
+            <!-- // Begin Template Header \ -->
+            <table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader" style="background-color: #FFFFFF;border-bottom: 5px solid #505050;">
+                <tr>
+                    <td class="headerContent" width="100%" style="padding-left: 20px;padding-right: 10px;border-collapse: collapse;color: #202020;font-family: Arial;font-size: 34px;font-weight: bold;line-height: 100%;padding: 10px;text-align: right;vertical-align: middle;">
+                        <div>
+                            <h1 style="color: #202020;display: block;font-family: Arial;font-size: 40px;font-weight: bold;line-height: 100%;margin-top: 2%;margin-right: 0;margin-bottom: 1%;margin-left: 0;text-align: left;">
+                                {% block h1 %}
+                                    {% block title %}To<span style="color: #672c85">O</span><span style="color: #a5b833">L</span><span style="color: #f27621">X</span>{% endblock %} - {% block subtitle %}Notification{% endblock %}
+                                {% endblock %}
+                            </h1>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- // End Template Header \ -->
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" style="border-collapse: collapse;">
+            <!-- // Begin Template Body \ -->
+            <table border="0" cellpadding="10" cellspacing="0" width="600" id="templateBody">
+                <tr>
+                    <td valign="top" class="bodyContent" style="border-collapse: collapse;background-color: #FDFDFD;">
+                        <!-- // Begin Module: Standard Content \ -->
+                        <table border="0" cellpadding="10" cellspacing="0" width="100%">
+                            <tr>
+                                <td valign="top" style="padding-right: 0;border-collapse: collapse;">
+                                    <div style="color: #505050;font-family: Arial;font-size: 14px;line-height: 150%;text-align: justify;">
+                                        <h2 class="h2" style="color: #404040;display: block;font-family: Arial;font-size: 18px;font-weight: bold;line-height: 100%;margin-top: 2%;margin-right: 0;margin-bottom: 1%;margin-left: 0;text-align: left;">
+                                            {% block legend %}{% endblock %}
+                                        </h2>
+                                        <br>
+                                        {% block content %}
+                                        {% endblock %}
+                                        <br>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- // End Module: Standard Content \ -->
+                    </td>
+                </tr>
+            </table>
+            <!-- // End Template Body \ -->
+        </td>
+    </tr>
+</table>
+<br>
+</body>
+</html>

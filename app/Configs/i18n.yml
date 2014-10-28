@@ -1,0 +1,10 @@
+# I18N GETTEXT CONFIGURATION ARRAY
+---
+  gettext: 
+    domain: "messages"
+    codeset: "UTF-8"
+    suffix: ".utf8"
+    languageCode: 
+      en: "en_US"
+      es: "es_AR"
+      
