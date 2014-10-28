@@ -1,4 +1,5 @@
-#ToOLX
+#(SR)^2 Framework
+The engine from ToOLX
 
 Dev Documentation:
 ------------
