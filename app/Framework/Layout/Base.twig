@@ -12,7 +12,6 @@
         <link rel="stylesheet/less" type="text/css" href="{{ asset('less/base.less', 'System') }}" />
 
         <!-- google font libraries -->
-        {#<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css' />#}
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css' />
 
         <!--[if lt IE 9]>
@@ -29,13 +28,6 @@
 
         {#<script type="text/javascript">less = { env: 'development' };</script>#}
         <script type="text/javascript" src="{{ asset('js/libs/less.js', 'System') }}"></script>
-
-        <!-- Jira Issue Colector -->
-        {% if userLogged %}
-            <script type="text/javascript" async src="https://jira.olx.com/s/d41d8cd98f00b204e9800998ecf8427e/en_US-vwehv3-1988229788/6265/21/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=7dc16821">
-            </script>
-        {% endif %}
-        <!-- End - Jira Issue Colector -->
 
     </head>
     <body id="{{ idBody }}" class="fade-in">
